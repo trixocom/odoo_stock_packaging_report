@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Stock Packaging Report',
-    'version': '18.0.2.0.0',
+    'version': '18.0.2.0.1',
     'category': 'Inventory/Inventory',
     'summary': 'Muestra cantidad de embalajes en el reporte de stock',
     'description': """
