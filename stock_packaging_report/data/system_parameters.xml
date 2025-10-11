@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Parámetro del sistema para definir el tamaño del embalaje -->
+        <!-- Este valor por defecto es 1.0, pero puede ser modificado desde:
+             Configuración > Técnico > Parámetros del sistema -->
+        <record id="stock_packaging_size_param" model="ir.config_parameter">
+            <field name="key">stock_packaging_report.packaging_size</field>
+            <field name="value">1.0</field>
+        </record>
+    </data>
+</odoo>
