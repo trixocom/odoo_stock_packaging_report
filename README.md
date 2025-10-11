@@ -1,133 +1,148 @@
 # Stock Packaging Report
 
-## Descripción
+Módulo de Odoo 18 que añade una columna de "Cantidad de Embalajes" en el reporte de stock, calculada automáticamente según el tipo de embalaje configurado.
 
-Este módulo para Odoo 18 Enterprise Edition añade una columna en el reporte de stock que muestra la **cantidad de embalajes** en lugar de solo mostrar la cantidad de unidades.
+## 📋 Descripción
 
-El tamaño del embalaje es completamente parametrizable desde los parámetros del sistema, lo que permite una configuración flexible según las necesidades de cada empresa.
+Este módulo permite visualizar el stock disponible en términos de embalajes (cajas, pallets, bultos, etc.) en lugar de unidades individuales, facilitando la gestión logística y de almacén.
 
-## Características
+## ✨ Características
 
-- ✅ Nueva columna "Cantidad de Embalajes" en el reporte de stock (Inventario > Reportes > Stock)
-- ✅ Cálculo automático basado en la cantidad disponible
-- ✅ Parámetro de sistema configurable para definir el tamaño del embalaje
-- ✅ Compatible con Odoo 18 Enterprise Edition
-- ✅ Hereda correctamente de las vistas existentes sin modificar el código base
+- ✅ Nueva columna "Cantidad de Embalajes" en el reporte de stock
+- ✅ Configuración sencilla desde Ajustes de Inventario
+- ✅ Cálculo automático basado en los packagings ya definidos en Odoo
+- ✅ No requiere duplicar información: usa el qty existente en `product.packaging`
+- ✅ Compatible con Odoo 18
 
-## Instalación
+## 🔧 Instalación
 
-1. Clone o descargue este repositorio en su carpeta de addons de Odoo:
+1. Clonar o descargar este repositorio en tu carpeta de addons de Odoo:
 ```bash
-cd /path/to/odoo/addons
-git clone https://github.com/trixocom/odoo_stock_packaging_report.git stock_packaging_report
+cd /ruta/a/odoo/addons
+git clone https://github.com/trixocom/odoo_stock_packaging_report.git
 ```
 
-2. Reinicie el servidor de Odoo
+2. Actualizar la lista de aplicaciones en Odoo
+3. Buscar "Stock Packaging Report" e instalar el módulo
 
-3. Actualice la lista de aplicaciones:
-   - Vaya a **Apps** en Odoo
-   - Haga clic en el menú de tres puntos
-   - Seleccione **Update Apps List**
+## ⚙️ Configuración
 
-4. Busque "Stock Packaging Report" e instálelo
+### Paso 1: Configurar el nombre del embalaje
 
-## Configuración
+Ve a: **Inventario > Configuración > Ajustes**
 
-### Configurar el tamaño del embalaje
+En la sección **"Reporte de Embalajes en Stock"**, configura:
+- **Nombre del Embalaje para Stock**: Especifica el nombre exacto del tipo de embalaje que deseas usar (ej: "Caja", "Pallet", "Bulto")
 
-Para configurar el tamaño del embalaje:
+### Paso 2: Asegúrate que tus productos tienen packagings configurados
 
-1. Active el modo de desarrollador:
-   - Vaya a **Configuración** > **Activar el modo de desarrollador**
+El módulo utiliza los packagings ya existentes en Odoo. Para cada producto, asegúrate de tener configurado al menos un packaging:
 
-2. Navegue a:
-   - **Configuración** > **Técnico** > **Parámetros** > **Parámetros del Sistema**
+1. Ve a: **Inventario > Productos > Productos**
+2. Abre un producto
+3. Ve a la pestaña **"Inventario"**
+4. En la sección **"Embalajes"**, agrega o edita un packaging:
+   - **Nombre**: Debe coincidir exactamente con el configurado en Ajustes (ej: "Caja")
+   - **Cantidad**: Define cuántas unidades contiene ese embalaje (ej: 12)
 
-3. Busque el parámetro con la clave:
-   ```
-   stock_packaging_report.packaging_size
-   ```
+## 📊 Funcionamiento
 
-4. Modifique el valor según su necesidad. Por ejemplo:
-   - `12.0` para embalajes de 12 unidades
-   - `24.0` para embalajes de 24 unidades
-   - `1.0` (valor por defecto) para mantener la relación 1:1
+### Ejemplo práctico:
 
-### Ejemplo de uso
+1. **Configuración en Ajustes:**
+   - Nombre del embalaje = `"Caja"`
 
-Si tiene:
-- 120 unidades disponibles en stock
-- Tamaño de embalaje configurado en 12
+2. **Producto "Tornillo M6":**
+   - Tiene un packaging configurado:
+     - Nombre: `"Caja"`
+     - Cantidad: `12` (12 unidades por caja)
+   - Stock disponible: `144 unidades`
 
-La columna "Cantidad de Embalajes" mostrará: **10.00**
+3. **Resultado en el reporte de stock:**
+   - Cantidad de Embalajes = `144 / 12 = 12.0 cajas`
 
-## Estructura del Módulo
+### Fórmula de cálculo:
 
 ```
-stock_packaging_report/
-├── __init__.py
-├── __manifest__.py
-├── models/
-│   ├── __init__.py
-│   └── stock_quant.py
-├── views/
-│   └── stock_quant_views.xml
-├── data/
-│   └── system_parameters.xml
-└── README.md
-```
-
-## Detalles Técnicos
-
-### Modelo extendido: `stock.quant`
-
-El módulo extiende el modelo `stock.quant` añadiendo un campo calculado:
-
-```python
-packaging_quantity = fields.Float(
-    string='Cantidad de Embalajes',
-    compute='_compute_packaging_quantity',
-    digits='Product Unit of Measure',
-    help='Cantidad de embalajes calculada según el parámetro del sistema.'
-)
-```
-
-### Cálculo
-
-El campo se calcula mediante:
-```python
-packaging_quantity = available_quantity / packaging_size
+Cantidad de Embalajes = Stock Disponible ÷ Unidades por Embalaje
 ```
 
 Donde:
-- `available_quantity`: Cantidad disponible en stock (no reservada)
-- `packaging_size`: Valor del parámetro del sistema
+- **Stock Disponible**: El campo `available_quantity` del `stock.quant`
+- **Unidades por Embalaje**: El campo `qty` del `product.packaging` cuyo `name` coincide con el configurado
 
-## Compatibilidad
+## 🎯 Casos de uso
 
-- **Odoo Version**: 18.0 Enterprise Edition
-- **Módulos requeridos**: `stock`
-- **Python**: 3.10+
+### Gestión de almacén
+Visualiza rápidamente cuántas cajas, pallets o bultos tienes de cada producto para optimizar el espacio.
 
-## Soporte
+### Logística y envíos
+Calcula fácilmente cuántos embalajes completos puedes enviar o necesitas recibir.
 
-Para reportar problemas o solicitar nuevas características, por favor abra un issue en:
-https://github.com/trixocom/odoo_stock_packaging_report/issues
+### Inventario físico
+Facilita el conteo físico por embalajes en lugar de unidades individuales.
 
-## Licencia
+## 🔍 Notas importantes
 
-Este módulo está licenciado bajo LGPL-3.
+1. **Nombre exacto**: El nombre del embalaje en la configuración debe coincidir EXACTAMENTE con el nombre del packaging del producto (case-sensitive).
 
-## Autor
+2. **Sin packaging configurado**: Si un producto no tiene un packaging con el nombre configurado, su "Cantidad de Embalajes" se mostrará como `0.0`.
+
+3. **Múltiples packagings**: Si un producto tiene varios tipos de embalaje (Caja, Pallet, Bulto), el módulo solo usará el que coincida con el nombre configurado en Ajustes.
+
+4. **Valores decimales**: Los resultados se redondean a 2 decimales, permitiendo ver embalajes parciales (ej: `12.5 cajas`).
+
+## 🛠️ Información técnica
+
+### Modelos modificados
+
+- **`stock.quant`**: Añade el campo computado `packaging_quantity`
+- **`res.config.settings`**: Añade el campo de configuración `packaging_name_for_stock`
+
+### Dependencias
+
+- `stock`: Módulo de inventario de Odoo
+- `product`: Módulo de productos de Odoo
+
+### Parámetros del sistema
+
+El módulo utiliza el siguiente parámetro de sistema:
+- `stock_packaging_report.packaging_name`: Almacena el nombre del packaging configurado (default: "Caja")
+
+## 📝 Changelog
+
+### Version 2.0.0 (2025-10-11)
+- ✨ Refactorización completa del cálculo
+- ✨ Ahora usa el campo `qty` existente de `product.packaging`
+- ✨ Configuración por nombre de packaging en lugar de cantidad fija
+- ✨ Interfaz de configuración mejorada en Ajustes de Inventario
+- ✨ Documentación extendida con ejemplos
+
+### Version 1.0.0
+- 🎉 Versión inicial
+
+## 📄 Licencia
+
+LGPL-3
+
+## 👤 Autor
 
 **Trixocom**
 - GitHub: [@trixocom](https://github.com/trixocom)
-- Email: hectorquiroz@trixocom.com
 
-## Notas de Versión
+## 🤝 Contribuciones
 
-### Version 18.0.1.0.0
-- Versión inicial
-- Campo calculado `packaging_quantity`
-- Parámetro de sistema configurable
-- Vistas extendidas para mostrar la columna en el reporte de stock
+Las contribuciones son bienvenidas. Por favor:
+1. Fork el proyecto
+2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
+3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
+4. Push a la rama (`git push origin feature/AmazingFeature`)
+5. Abre un Pull Request
+
+## 🐛 Reporte de bugs
+
+Si encuentras algún error, por favor abre un issue en: https://github.com/trixocom/odoo_stock_packaging_report/issues
+
+## ❓ Soporte
+
+Para preguntas o soporte, abre un issue en el repositorio de GitHub.
