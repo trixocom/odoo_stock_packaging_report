@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data noupdate="1">
-        <!-- Parámetro del sistema para definir el tamaño del embalaje -->
-        <!-- Este valor por defecto es 1.0, pero puede ser modificado desde:
-             Configuración > Técnico > Parámetros del sistema -->
-        <record id="stock_packaging_size_param" model="ir.config_parameter">
-            <field name="key">stock_packaging_report.packaging_size</field>
-            <field name="value">1.0</field>
+        <!-- Parámetro del sistema para definir el NOMBRE del embalaje -->
+        <!-- Este parámetro guarda el nombre del tipo de embalaje (campo 'name' de product.packaging)
+             que se usará para buscar y obtener el qty (unidades por embalaje) -->
+        <!-- Puede ser modificado desde: Inventario > Configuración > Ajustes -->
+        <record id="stock_packaging_name_param" model="ir.config_parameter">
+            <field name="key">stock_packaging_report.packaging_name</field>
+            <field name="value">Caja</field>
         </record>
     </data>
 </odoo>

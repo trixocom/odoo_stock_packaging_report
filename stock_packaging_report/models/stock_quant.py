@@ -10,37 +10,49 @@ class StockQuant(models.Model):
         string='Cantidad de Embalajes',
         compute='_compute_packaging_quantity',
         digits='Product Unit of Measure',
-        help='Cantidad de embalajes calculada según el parámetro del sistema.'
+        help='Cantidad de embalajes calculada según el tipo de embalaje configurado en el sistema.'
     )
 
-    @api.depends('quantity', 'available_quantity')
+    @api.depends('quantity', 'available_quantity', 'product_id')
     def _compute_packaging_quantity(self):
         """
-        Calcula la cantidad de embalajes basándose en la cantidad disponible
-        y el tamaño de embalaje definido en los parámetros del sistema.
+        Calcula la cantidad de embalajes basándose en:
+        1. La cantidad disponible del quant
+        2. El nombre del tipo de embalaje configurado en el sistema
+        3. El qty definido en product.packaging para ese tipo de embalaje
         """
-        # Obtener el parámetro del sistema para el tamaño del embalaje
-        packaging_size = float(
-            self.env['ir.config_parameter'].sudo().get_param(
-                'stock_packaging_report.packaging_size', 
-                default='1.0'
-            )
+        # Obtener el nombre del packaging configurado en el sistema
+        packaging_name = self.env['ir.config_parameter'].sudo().get_param(
+            'stock_packaging_report.packaging_name',
+            default=''
         )
         
-        # Validar que el tamaño del embalaje sea válido
-        if packaging_size <= 0:
-            packaging_size = 1.0
-        
         for quant in self:
-            # Usar available_quantity (disponible) en lugar de quantity total
-            # para mostrar solo lo que realmente está disponible para usar
-            qty = quant.available_quantity
+            quant.packaging_quantity = 0.0
             
-            # Calcular cantidad de embalajes
-            if packaging_size > 0:
-                quant.packaging_quantity = float_round(
-                    qty / packaging_size,
-                    precision_rounding=0.01
-                )
-            else:
-                quant.packaging_quantity = 0.0
+            # Si no hay nombre de packaging configurado, no calcular
+            if not packaging_name:
+                continue
+            
+            # Si no hay producto asociado, no calcular
+            if not quant.product_id:
+                continue
+            
+            # Buscar el packaging con el nombre configurado para este producto
+            packaging = self.env['product.packaging'].search([
+                ('product_id', '=', quant.product_id.id),
+                ('name', '=', packaging_name)
+            ], limit=1)
+            
+            # Si no se encuentra el packaging o no tiene qty válido, no calcular
+            if not packaging or packaging.qty <= 0:
+                continue
+            
+            # Calcular cantidad de embalajes: Stock Disponible / Unidades por Embalaje
+            qty_available = quant.available_quantity
+            packaging_qty = packaging.qty
+            
+            quant.packaging_quantity = float_round(
+                qty_available / packaging_qty,
+                precision_rounding=0.01
+            )
