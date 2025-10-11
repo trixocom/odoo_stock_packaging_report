@@ -8,9 +8,9 @@
         <field name="arch" type="xml">
             <!-- Añadir la columna de cantidad de embalajes después de la columna de cantidad disponible -->
             <xpath expr="//field[@name='available_quantity']" position="after">
-                <field name="packaging_quantity" string="Cantidad de Embalajes" 
-                       widget="float" 
-                       optional="show"/>
+                <field name="packaging_quantity" 
+                       string="Cantidad de Embalajes" 
+                       widget="float"/>
             </xpath>
         </field>
     </record>
@@ -23,10 +23,10 @@
         <field name="arch" type="xml">
             <!-- Añadir la columna después de available_quantity -->
             <xpath expr="//field[@name='available_quantity']" position="after">
-                <field name="packaging_quantity" string="Cantidad de Embalajes" 
+                <field name="packaging_quantity" 
+                       string="Cantidad de Embalajes" 
                        widget="float" 
-                       readonly="1"
-                       optional="show"/>
+                       readonly="1"/>
             </xpath>
         </field>
     </record>
