@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Stock Packaging Report',
-    'version': '18.0.9.0.0',
+    'version': '18.0.10.0.0',
     'category': 'Inventory/Inventory',
     'summary': 'Muestra cantidad de embalajes en el reporte de Existencias',
     'description': """
@@ -37,18 +37,13 @@
         * Cálculo automático basado en los packagings ya definidos en Odoo
         * No requiere duplicar información: usa el qty existente en product.packaging
         * Compatible con Odoo 18 Enterprise Edition
-        * Funciona con o sin el módulo product_stock_state
         
-        Changelog v9.0.0:
+        Changelog v10.0.0:
         ----------------
-        * Fix CRÍTICO: Campo ahora se añade después de 'virtual_available' 
-        * Hereda de stock.view_stock_product_tree (siempre disponible)
-        * Prioridad 100 para aplicarse después de todas las demás vistas
-        * Compatible con instalaciones CON o SIN product_stock_state
-        
-        Changelog v8.0.0:
-        ----------------
-        * Intento de heredar de product_stock_state (falló si no está instalado)
+        * Fix FINAL: Hereda de stock.product_product_stock_tree (vista correcta del menú Existencias)
+        * Esta es la vista base que usa la acción ID 663 del menú Existencias
+        * Campo añadido después de virtual_available
+        * SOLUCIÓN DEFINITIVA para Odoo 18 EE
     """,
     'author': 'Trixocom',
     'website': 'https://github.com/trixocom/odoo_stock_packaging_report',
