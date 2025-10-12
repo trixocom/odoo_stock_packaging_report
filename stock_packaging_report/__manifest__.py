@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Stock Packaging Report',
-    'version': '18.0.5.0.0',
+    'version': '18.0.6.0.0',
     'category': 'Inventory/Inventory',
     'summary': 'Muestra cantidad de embalajes en el reporte de Existencias',
     'description': """
@@ -37,6 +37,13 @@
         * Cálculo automático basado en los packagings ya definidos en Odoo
         * No requiere duplicar información: usa el qty existente en product.packaging
         * Compatible con Odoo 18 Enterprise Edition
+        
+        Changelog v6.0.0:
+        ----------------
+        * Fix: Eliminada importación innecesaria de stock_quant del __init__.py
+        * Fix: Archivo stock_quant.py marcado como deprecated (no se usa)
+        * Optimización: Código limpio solo con product.product
+        * Compatible con Odoo 18 EE reporte Existencias
         
         Changelog v5.0.0:
         ----------------
