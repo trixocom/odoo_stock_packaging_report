@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Stock Packaging Report',
-    'version': '18.0.6.0.0',
+    'version': '18.0.7.0.0',
     'category': 'Inventory/Inventory',
     'summary': 'Muestra cantidad de embalajes en el reporte de Existencias',
     'description': """
@@ -38,19 +38,18 @@
         * No requiere duplicar información: usa el qty existente en product.packaging
         * Compatible con Odoo 18 Enterprise Edition
         
+        Changelog v7.0.0:
+        ----------------
+        * Fix CRÍTICO: Herencia múltiple de vistas para compatibilidad con Odoo 18 EE
+        * Ahora hereda tanto de product.product_product_tree_view como de stock.view_stock_product_tree
+        * Campo añadido con mayor prioridad para asegurar visibilidad
+        * Eliminado atributo 'invisible' que podía ocultar la columna
+        
         Changelog v6.0.0:
         ----------------
         * Fix: Eliminada importación innecesaria de stock_quant del __init__.py
         * Fix: Archivo stock_quant.py marcado como deprecated (no se usa)
         * Optimización: Código limpio solo con product.product
-        * Compatible con Odoo 18 EE reporte Existencias
-        
-        Changelog v5.0.0:
-        ----------------
-        * Fix CRÍTICO: Corregido el modelo - ahora usa product.product en lugar de stock.quant
-        * Fix: Heredar de stock.view_stock_product_tree (vista correcta del reporte Existencias)
-        * Fix: Removida dependencia de product_stock_state (no siempre está instalado)
-        * El campo ahora aparece en el reporte correcto: Inventario > Reportes > Existencias
     """,
     'author': 'Trixocom',
     'website': 'https://github.com/trixocom/odoo_stock_packaging_report',
