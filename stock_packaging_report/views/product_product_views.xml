@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Heredar la vista list de productos con stock para añadir la columna de embalajes -->
+    <record id="view_product_product_tree_inherit_packaging" model="ir.ui.view">
+        <field name="name">product.product.tree.inherit.packaging</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product_stock_state.view_product_product_tree"/>
+        <field name="arch" type="xml">
+            <!-- Añadir la columna después de qty_available -->
+            <xpath expr="//field[@name='qty_available']" position="after">
+                <field name="packaging_quantity_available" 
+                       string="Embalajes Disponibles" 
+                       widget="float"
+                       decoration-info="packaging_quantity_available &gt; 0"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
