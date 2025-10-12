@@ -1,15 +1,16 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Stock Packaging Report',
-    'version': '18.0.4.0.0',
+    'version': '18.0.5.0.0',
     'category': 'Inventory/Inventory',
-    'summary': 'Muestra cantidad de embalajes en el reporte de stock',
+    'summary': 'Muestra cantidad de embalajes en el reporte de Existencias',
     'description': """
         Stock Packaging Report
         ======================
         
-        Este módulo añade una columna en el reporte de stock (Existencias) que muestra 
-        la cantidad de embalajes calculada automáticamente según el tipo de embalaje configurado.
+        Este módulo añade una columna "Embalajes Disponibles" en el reporte de Existencias 
+        (Inventario > Reportes > Existencias) que muestra la cantidad de embalajes calculada 
+        automáticamente según el tipo de embalaje configurado.
         
         Funcionamiento:
         ---------------
@@ -31,17 +32,18 @@
         
         Características:
         ----------------
-        * Nueva columna "Cantidad de Embalajes" en reportes de stock.quant
+        * Nueva columna "Embalajes Disponibles" en Inventario > Reportes > Existencias
         * Configuración sencilla desde Ajustes de Inventario
         * Cálculo automático basado en los packagings ya definidos en Odoo
         * No requiere duplicar información: usa el qty existente en product.packaging
+        * Compatible con Odoo 18 Enterprise Edition
         
-        Changelog v4.0.0:
+        Changelog v5.0.0:
         ----------------
-        * Fix: Corregidos los XPath en las vistas para usar //field en lugar de //list/field
-        * Fix: La columna ahora se posiciona después de available_quantity
-        * Limpieza: Removidas dependencias innecesarias (product_stock_state)
-        * Limpieza: Removida vista product_product_views.xml no utilizada
+        * Fix CRÍTICO: Corregido el modelo - ahora usa product.product en lugar de stock.quant
+        * Fix: Heredar de stock.view_stock_product_tree (vista correcta del reporte Existencias)
+        * Fix: Removida dependencia de product_stock_state (no siempre está instalado)
+        * El campo ahora aparece en el reporte correcto: Inventario > Reportes > Existencias
     """,
     'author': 'Trixocom',
     'website': 'https://github.com/trixocom/odoo_stock_packaging_report',
@@ -50,7 +52,7 @@
     'data': [
         'data/system_parameters.xml',
         'views/res_config_settings_views.xml',
-        'views/stock_quant_views.xml',
+        'views/product_product_views.xml',
     ],
     'installable': True,
     'application': False,
