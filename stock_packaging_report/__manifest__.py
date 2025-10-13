@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Stock Packaging Report',
-    'version': '18.0.11.5.1',
+    'version': '18.0.11.5.2',
     'category': 'Inventory/Inventory',
     'summary': 'Muestra cantidad de embalajes en el reporte de Existencias y en los smart buttons del producto',
     'description': """
@@ -47,17 +47,21 @@
         * No requiere duplicar información: usa el qty existente en product.packaging
         * Compatible con Odoo 18 Enterprise Edition
         
+        Changelog v11.5.2:
+        ------------------
+        * FIX: Reemplazado @class por hasclass() en xpaths para evitar warnings
+        * Odoo recomienda usar hasclass() en lugar de @class='...' para mayor robustez
+        * Eliminados los warnings: "Error-prone use of @class in view"
+        
         Changelog v11.5.1:
         ------------------
         * FIX: Aumentado ancho de botones a 180px (era 140px, muy angosto)
         * FIX: Corregida estructura de botones - número y embalaje en misma línea
         * IMPROVE: Uso de d-flex gap-1 para espaciado correcto entre número y nombre
-        * Ahora se ve: "582,08 Bulto" en una línea y "Disponible" debajo
         
         Changelog v11.5.0:
         ------------------
         * FEATURE: Agregado botón "Pronosticado" con embalajes (packaging_virtual_available)
-        * IMPROVE: Botones ensanchados para evitar amontonamiento de texto
         * REFACTOR: Método auxiliar _calculate_packaging_qty para evitar duplicación de código
     """,
     'author': 'Trixocom',
