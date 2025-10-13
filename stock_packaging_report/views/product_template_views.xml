@@ -8,11 +8,20 @@
         <field name="arch" type="xml">
             <!-- Reemplazar el botón de "On Hand" por uno que muestre embalajes -->
             <xpath expr="//button[@name='action_open_quants']" position="replace">
-                <button name="action_open_quants" type="object" class="oe_stat_button" icon="fa-cubes" 
+                <button name="action_open_quants" type="object" 
+                        class="oe_stat_button" 
+                        icon="fa-cubes"
                         context="{'search_default_internal_loc': 1}">
-                    <field name="packaging_quantity_available" widget="statinfo" string="Disponible"/>
-                    <div class="o_stat_info">
-                        <span class="o_stat_text"><field name="packaging_name_display" invisible="1"/><t t-esc="record.packaging_name_display.value or 'Unidades'"/></span>
+                    <div class="o_field_widget o_stat_info">
+                        <span class="o_stat_value">
+                            <field name="packaging_quantity_available" widget="statinfo" nolabel="1"/>
+                        </span>
+                        <span class="o_stat_text">
+                            Disponible
+                        </span>
+                        <span class="o_stat_text">
+                            <field name="packaging_name_display" nolabel="1"/>
+                        </span>
                     </div>
                 </button>
             </xpath>
