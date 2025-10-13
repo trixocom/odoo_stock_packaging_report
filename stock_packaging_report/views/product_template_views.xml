@@ -11,7 +11,7 @@
             <xpath expr="//button[@name='action_update_quantity_on_hand']" position="attributes">
                 <attribute name="style">min-width: 180px;</attribute>
             </xpath>
-            <xpath expr="//button[@name='action_update_quantity_on_hand']/div[@class='o_field_widget o_stat_info']" position="replace">
+            <xpath expr="//button[@name='action_update_quantity_on_hand']/div[hasclass('o_stat_info')]" position="replace">
                 <div class="o_field_widget o_stat_info">
                     <span class="o_stat_value d-flex gap-1">
                         <field name="packaging_quantity_available" nolabel="1" class="oe_inline"/>
@@ -25,7 +25,7 @@
             <xpath expr="//button[@name='action_product_tmpl_forecast_report']" position="attributes">
                 <attribute name="style">min-width: 180px;</attribute>
             </xpath>
-            <xpath expr="//button[@name='action_product_tmpl_forecast_report']/div[@class='o_field_widget o_stat_info']" position="replace">
+            <xpath expr="//button[@name='action_product_tmpl_forecast_report']/div[hasclass('o_stat_info')]" position="replace">
                 <div class="o_field_widget o_stat_info">
                     <span class="o_stat_value d-flex gap-1">
                         <field name="packaging_virtual_available" nolabel="1" class="oe_inline"/>
