@@ -1,245 +1,271 @@
-# Stock Packaging Report - Módulo Odoo 18
+# 📦 Stock Packaging Report - Módulo Odoo 18
 
 [![License: LGPL-3](https://img.shields.io/badge/License-LGPL%20v3-blue.svg)](https://www.gnu.org/licenses/lgpl-3.0)
-[![Odoo Version](https://img.shields.io/badge/Odoo-18.0-875A7B.svg)](https://www.odoo.com/)
-[![Version](https://img.shields.io/badge/version-4.0.0-brightgreen.svg)](https://github.com/trixocom/odoo_stock_packaging_report)
+[![Odoo Version](https://img.shields.io/badge/Odoo-18.0-purple.svg)](https://www.odoo.com)
+[![Version](https://img.shields.io/badge/version-11.0.0-green.svg)](https://github.com/trixocom/odoo_stock_packaging_report)
 
-## 📦 Descripción
+## 📋 Descripción
 
-Este módulo añade una columna en el reporte de stock (Existencias) que muestra la **cantidad de embalajes** calculada automáticamente según el tipo de embalaje configurado.
+Módulo para Odoo 18 que **transforma la visualización del stock** de unidades a **embalajes** (cajas, bultos, pallets, etc.) en:
 
-### ✨ Características principales
+1. **Smart Button del producto**: Reemplaza "Disponible X U" por "Disponible X Cajas"
+2. **Reporte de Existencias**: Agrega columna "Embalajes Disponibles"
 
-- ✅ **Nueva columna "Cantidad de Embalajes"** en reportes de stock.quant
-- ✅ **Configuración sencilla** desde Ajustes de Inventario
-- ✅ **Cálculo automático** basado en los packagings ya definidos en Odoo
-- ✅ **No duplica información**: usa el `qty` existente en `product.packaging`
-- ✅ Compatible con **Odoo 18.0**
+### 🎯 Problema que resuelve
 
----
+**Antes del módulo:**
+- Smart button muestra: "Disponible 5.030 U" ❌
+- Difícil calcular cuántos embalajes hay en stock
 
-## 🚀 Funcionamiento
-
-### Paso 1: Configuración
-
-1. Ve a: **Inventario > Configuración > Ajustes**
-2. Busca la sección: **"Reporte de Embalajes en Stock"**
-3. Configura el campo: **"Nombre del Embalaje para Stock"**
-   - Ejemplo: `Caja`, `Pallet`, `Bulto`, etc.
-
-![Configuración](https://via.placeholder.com/800x200?text=Configuración+del+módulo)
-
-### Paso 2: Sistema busca el packaging
-
-El sistema buscará en cada producto el embalaje (`product.packaging`) que tenga ese nombre exacto.
-
-### Paso 3: Cálculo automático
-
-Utilizará el campo **`qty`** (Unidades por embalaje) de ese packaging para calcular:
-
-```
-Cantidad de Embalajes = Stock Disponible / qty (unidades por embalaje)
-```
+**Con el módulo:**
+- Smart button muestra: "Disponible 503 Cajas" ✅
+- Cálculo automático: 5.030 unidades ÷ 10 unidades/caja = 503 cajas
 
 ---
 
-## 💡 Ejemplo práctico
+## ✨ Características Principales
 
-### Configuración
-- **Nombre del embalaje configurado:** `"Caja"`
+### 1. Smart Button Modificado
+- **Ubicación**: Formulario del producto (botón superior derecho)
+- **Antes**: `Disponible 5.030 U`
+- **Ahora**: `Disponible 503 Cajas` (o el nombre configurado)
+- **Cálculo**: Stock Disponible ÷ Unidades por Embalaje
 
-### Producto X
-- Tiene un packaging con:
-  - `name = "Caja"`
-  - `qty = 12` (12 unidades por caja)
-- **Stock disponible:** 144 unidades
-
-### Resultado
-```
-144 unidades / 12 unidades por caja = 12.0 cajas
-```
-
-La columna "Cantidad de Embalajes" mostrará: **12.0**
+### 2. Columna en Reporte de Existencias
+- **Ubicación**: Inventario > Reportes > Existencias
+- **Columna**: "Embalajes Disponibles"
+- **Muestra**: Cantidad calculada de embalajes por producto
 
 ---
 
-## 📋 Instalación
+## 🚀 Instalación
 
-### Método 1: Desde interfaz de Odoo
+### Requisitos previos
+- Odoo 18 Enterprise Edition
+- Módulos: `stock`, `product`
 
-1. Copia el módulo en tu carpeta de addons:
-   ```bash
-   cd /path/to/odoo/addons
-   git clone https://github.com/trixocom/odoo_stock_packaging_report.git
-   ```
+### Pasos de instalación
 
-2. Actualiza la lista de aplicaciones:
-   - Ve a **Aplicaciones**
-   - Elimina el filtro "Apps"
-   - Busca "Stock Packaging Report"
-   - Haz clic en **Instalar**
-
-### Método 2: Desde línea de comandos
-
+1. **Clonar el repositorio:**
 ```bash
-cd /path/to/odoo
-./odoo-bin -d tu_base_de_datos -i stock_packaging_report --stop-after-init
+cd /mnt/extra-addons
+git clone https://github.com/trixocom/odoo_stock_packaging_report.git
 ```
 
----
-
-## 🔄 Actualización
-
-Si ya tienes una versión anterior instalada:
-
-### Desde interfaz
-1. Ve a **Aplicaciones**
-2. Busca "Stock Packaging Report"
-3. Haz clic en **Actualizar**
-
-### Desde línea de comandos
+2. **Reiniciar Odoo:**
 ```bash
-cd /path/to/odoo/addons/odoo_stock_packaging_report
-git pull origin main
+sudo systemctl restart odoo
+```
 
-cd /path/to/odoo
-./odoo-bin -d tu_base_de_datos -u stock_packaging_report --stop-after-init
+3. **Activar modo desarrollador:**
+   - Ajustes > Activar el modo de desarrollador
+
+4. **Actualizar lista de aplicaciones:**
+   - Aplicaciones > Actualizar lista de aplicaciones
+
+5. **Instalar el módulo:**
+   - Buscar "Stock Packaging Report"
+   - Clic en **Instalar**
+
+---
+
+## ⚙️ Configuración
+
+### Paso 1: Configurar el nombre del embalaje
+
+1. Ir a **Inventario > Configuración > Ajustes**
+2. Buscar la sección **"Nombre del Embalaje para Stock"**
+3. Ingresar el nombre exacto del tipo de embalaje (ejemplo: `"Caja"`, `"Bulto"`, `"Pallet"`)
+4. Clic en **Guardar**
+
+![Configuración](https://via.placeholder.com/800x200/4CAF50/FFFFFF?text=Inventario+>+Configuración+>+Ajustes)
+
+### Paso 2: Configurar packagings en los productos
+
+Para cada producto que quieras mostrar en embalajes:
+
+1. Abrir el producto
+2. Ir a la pestaña **"Inventario"**
+3. En la sección **"Embalajes"**, agregar o editar un packaging:
+   - **Nombre**: Debe coincidir **exactamente** con el configurado en Ajustes (ej: `"Caja"`)
+   - **Cantidad**: Define cuántas unidades contiene ese embalaje (ej: `10`)
+
+![Packaging del Producto](https://via.placeholder.com/800x300/2196F3/FFFFFF?text=Producto+>+Inventario+>+Embalajes)
+
+---
+
+## 📊 Ejemplo de Uso
+
+### Configuración del sistema:
+- **Nombre del embalaje configurado**: `"Caja"`
+
+### Producto: "Azúcar Ledesma X 1 KG"
+- **Packaging configurado**:
+  - Nombre: `"Caja"`
+  - Cantidad: `10` unidades por caja
+- **Stock disponible**: `5.030 unidades`
+
+### Resultados:
+
+#### Smart Button del producto:
+```
+┌─────────────────┐
+│   📦 Disponible │
+│      503        │
+│     Cajas       │
+└─────────────────┘
+```
+
+#### Columna en Reporte de Existencias:
+| Producto | Cantidad Disponible | **Embalajes Disponibles** |
+|----------|---------------------|---------------------------|
+| Azúcar Ledesma X 1 KG | 5.030 U | **503.0 Cajas** |
+
+### Fórmula de cálculo:
+```
+Embalajes = Stock Disponible ÷ Unidades por Embalaje
+          = 5.030 ÷ 10
+          = 503 cajas
 ```
 
 ---
 
-## 📁 Estructura del módulo
+## 🎯 Casos de Uso
 
-```
-stock_packaging_report/
-├── __init__.py                          # Inicialización del módulo
-├── __manifest__.py                      # Manifest del módulo
-│
-├── models/
-│   ├── __init__.py                      # Inicialización de modelos
-│   ├── stock_quant.py                   # ⭐ Modelo principal - Añade campo packaging_quantity
-│   ├── res_config_settings.py           # Configuración del módulo
-│   └── product_product.py               # Campo adicional en product (opcional)
-│
-├── views/
-│   ├── stock_quant_views.xml            # ⭐ Vista principal - Columna en reportes de stock
-│   ├── res_config_settings_views.xml    # Vista de configuración
-│   └── product_product_views.xml        # Vista de producto (opcional, sin usar)
-│
-├── data/
-│   └── system_parameters.xml            # Parámetros del sistema
-│
-├── README.md                            # Este archivo
-└── CHANGELOG.md                         # Historial de cambios
-```
+### 📦 Gestión de almacén
+Visualiza rápidamente cuántas cajas, pallets o bultos tienes para optimizar el espacio.
 
-### ⭐ Archivos principales
+### 🚚 Logística y envíos
+Calcula fácilmente cuántos embalajes completos puedes enviar o necesitas recibir.
 
-| Archivo | Descripción |
-|---------|-------------|
-| `models/stock_quant.py` | Añade el campo calculado `packaging_quantity` al modelo `stock.quant` |
-| `views/stock_quant_views.xml` | Añade la columna "Cantidad de Embalajes" en las vistas tree de stock |
-| `models/res_config_settings.py` | Configuración para definir el nombre del embalaje |
-| `views/res_config_settings_views.xml` | Interfaz de configuración en Ajustes de Inventario |
+### 📝 Inventario físico
+Facilita el conteo físico por embalajes en lugar de unidades individuales.
+
+### 💼 Planificación de compras
+Determina cuántos embalajes necesitas comprar basándote en el stock actual.
 
 ---
 
-## 🔧 Uso
+## 🔧 Funcionamiento Técnico
 
-### Ver la columna en reportes de stock
+### Modelos extendidos
 
-1. Ve a: **Inventario > Reportes > Existencias**
-2. Verás la nueva columna: **"Cantidad de Embalajes"**
-3. Si no la ves, haz clic en el icono de columnas (☰) y actívala
+#### `product.template`
+- **Campo nuevo**: `packaging_quantity_available` (Float computado)
+  - Calcula: `qty_available / packaging.qty`
+- **Campo nuevo**: `packaging_name_display` (Char computado)
+  - Obtiene el nombre del embalaje configurado
 
-### Configurar packagings en productos
+#### `product.product`
+- **Campo nuevo**: `packaging_quantity_available` (Float computado)
+  - Mismo cálculo que en product.template
 
-Para que el cálculo funcione correctamente:
+### Vistas modificadas
 
-1. Ve a: **Inventario > Productos > Productos**
-2. Abre un producto
-3. Ve a la pestaña: **Inventario**
-4. En la sección **"Empaquetado"**, añade un packaging:
-   - **Nombre:** `Caja` (debe coincidir exactamente con la configuración)
-   - **Unidades por embalaje (qty):** `12`
+#### `product_template_form_view`
+- **Smart button modificado**: Muestra embalajes en lugar de unidades
+- **XPath**: Reemplaza el botón `action_open_quants`
+
+#### `product_product_stock_tree`
+- **Nueva columna**: "Embalajes Disponibles"
+- **Posición**: Después de "Cantidad Disponible"
+
+### Parámetros del sistema
+
+- **Clave**: `stock_packaging_report.packaging_name`
+- **Valor**: Nombre del packaging configurado (default: vacío)
+- **Ubicación**: Configuración de Inventario
 
 ---
 
-## 📊 Dependencias
+## ⚠️ Notas Importantes
 
-- `stock` - Módulo de inventario de Odoo
-- `product` - Módulo de productos de Odoo
+### ✅ Nombre exacto
+El nombre del embalaje en la configuración debe coincidir **EXACTAMENTE** con el nombre del packaging del producto (es case-sensitive).
+
+**Ejemplo:**
+- ❌ Configuración: `"caja"` | Producto: `"Caja"` → No funcionará
+- ✅ Configuración: `"Caja"` | Producto: `"Caja"` → Funcionará
+
+### ⚠️ Sin packaging configurado
+Si un producto no tiene un packaging con el nombre configurado:
+- Smart button mostrará la cantidad de unidades (`qty_available`)
+- Columna "Embalajes Disponibles" mostrará `0.0`
+
+### 📦 Múltiples packagings
+Si un producto tiene varios tipos de embalaje (Caja, Pallet, Bulto), el módulo solo usará el que coincida con el nombre configurado en Ajustes.
+
+### 🔢 Valores decimales
+Los resultados se redondean a 2 decimales, permitiendo ver embalajes parciales (ej: `12.5 cajas`).
 
 ---
 
-## 🐛 Problemas conocidos
+## 🐛 Solución de Problemas
 
-### La columna no aparece
+### El smart button sigue mostrando unidades (U)
 
-**Solución 1:** Activa la columna manualmente
-- Haz clic en el icono de columnas (☰) en la vista tree
-- Busca "Cantidad de Embalajes"
-- Actívala
+**Causa**: El producto no tiene un packaging configurado con el nombre exacto.
 
-**Solución 2:** Actualiza el módulo
-```bash
-./odoo-bin -d tu_bd -u stock_packaging_report --stop-after-init
-```
+**Solución**:
+1. Verificar que el nombre del embalaje en Ajustes sea exacto
+2. Ir al producto > pestaña Inventario > Embalajes
+3. Crear/editar un packaging con el nombre exacto
+4. Refrescar la página (Ctrl + Shift + R)
 
-### El cálculo muestra 0.0
+### La columna no aparece en el reporte
 
-**Causas posibles:**
-1. No has configurado el nombre del embalaje en Ajustes
-2. El producto no tiene un packaging con ese nombre exacto
-3. El packaging tiene `qty = 0` o negativo
+**Solución**:
+1. Ir a Inventario > Reportes > Existencias
+2. Clic en el icono de columnas (☰)
+3. Activar "Embalajes Disponibles"
+4. Refrescar con Ctrl + Shift + R
 
-**Solución:**
-- Verifica la configuración en Inventario > Configuración > Ajustes
-- Verifica que el producto tenga un packaging con el nombre correcto
-- Verifica que el packaging tenga un `qty` mayor a 0
+### El cálculo es incorrecto
+
+**Verificar**:
+1. El campo `qty` del packaging está correctamente configurado
+2. El `qty_available` del producto es correcto
+3. Refrescar el navegador y volver a calcular
 
 ---
 
 ## 📝 Changelog
 
-### Version 4.0.0 (2025-10-12)
-- ✅ **Fix:** Corregidos los XPath en las vistas para usar `//field` en lugar de `//list/field`
-- ✅ **Fix:** La columna ahora se posiciona después de `available_quantity`
-- ✅ **Mejora:** Removidas dependencias innecesarias (`product_stock_state`)
-- ✅ **Limpieza:** Reorganización de archivos en el manifest
+### Version 11.0.0 (2025-10-13)
+- ✨ **NEW**: Smart button del producto modificado para mostrar embalajes
+- ✨ **NEW**: Nombre del embalaje visible en el smart button
+- 🔧 **FIX**: Cálculo correcto: unidades ÷ unidades_por_embalaje
+- 🎯 **IMPROVE**: Modelo product.template extendido
+- 🎨 **IMPROVE**: Vista del formulario del producto mejorada
 
-### Version 3.0.0 (2025-10-11)
-- ✅ Añadido campo en `product.product` para ver embalajes en vista de producto
-- ✅ Añadida dependencia `product_stock_state`
+### Version 10.0.0 (2025-10-12)
+- 🔧 **FIX**: Herencia correcta de vista de reporte de existencias
+- 📚 **DOCS**: Documentación completa agregada
 
 ### Version 2.0.0 (2025-10-11)
-- ✅ Refactorización completa del módulo
-- ✅ Ahora usa el nombre del packaging en lugar de un valor fijo
-- ✅ Búsqueda dinámica del packaging por nombre
-- ✅ Uso del campo `qty` existente en `product.packaging`
-
-### Version 1.0.0 (2025-10-10)
-- ✅ Versión inicial del módulo
-
----
-
-## 👥 Autor
-
-**Trixocom**
-- GitHub: [@trixocom](https://github.com/trixocom)
-- Website: [https://github.com/trixocom/odoo_stock_packaging_report](https://github.com/trixocom/odoo_stock_packaging_report)
+- ✨ Refactorización completa del cálculo
+- ✨ Uso del campo `qty` existente de `product.packaging`
+- ✨ Configuración por nombre de packaging
 
 ---
 
 ## 📄 Licencia
 
-Este módulo está licenciado bajo [LGPL-3](https://www.gnu.org/licenses/lgpl-3.0.html).
+LGPL-3
+
+---
+
+## 👤 Autor
+
+**Trixocom**
+- GitHub: [@trixocom](https://github.com/trixocom)
+- Web: [https://trixocom.com](https://trixocom.com)
 
 ---
 
 ## 🤝 Contribuciones
 
-¡Las contribuciones son bienvenidas! Si encuentras algún bug o tienes alguna mejora:
+Las contribuciones son bienvenidas! 
 
 1. Fork el proyecto
 2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
@@ -249,14 +275,19 @@ Este módulo está licenciado bajo [LGPL-3](https://www.gnu.org/licenses/lgpl-3.
 
 ---
 
-## 💬 Soporte
+## 📞 Soporte
 
-Si tienes alguna pregunta o necesitas ayuda:
+Si encuentras algún problema o tienes alguna pregunta:
 
-- 🐛 [Reportar un bug](https://github.com/trixocom/odoo_stock_packaging_report/issues)
-- 💡 [Solicitar una feature](https://github.com/trixocom/odoo_stock_packaging_report/issues)
-- 📖 [Ver la documentación](https://github.com/trixocom/odoo_stock_packaging_report)
+- 🐛 Reporta bugs en [GitHub Issues](https://github.com/trixocom/odoo_stock_packaging_report/issues)
+- 💬 Preguntas en [GitHub Discussions](https://github.com/trixocom/odoo_stock_packaging_report/discussions)
 
 ---
 
-⭐ Si este módulo te fue útil, ¡no olvides darle una estrella en GitHub!
+## ⭐ ¿Te gusta este módulo?
+
+Si este módulo te resulta útil, ¡no olvides darle una ⭐ en GitHub!
+
+---
+
+**Última actualización**: Octubre 2025
