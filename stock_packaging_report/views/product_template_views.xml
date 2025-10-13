@@ -6,11 +6,11 @@
         <field name="model">product.template</field>
         <field name="inherit_id" ref="stock.product_template_form_view_procurement_button"/>
         <field name="arch" type="xml">
-            <!-- Reemplazar todo el contenido del div dentro del botón -->
-            <xpath expr="//button[@name='action_open_quants']/div[@class='o_field_widget o_stat_info']" position="replace">
+            <!-- Reemplazar todo el contenido del div dentro del botón "On Hand" -->
+            <xpath expr="//button[@name='action_update_quantity_on_hand']/div[@class='o_field_widget o_stat_info']" position="replace">
                 <div class="o_field_widget o_stat_info">
-                    <span class="o_stat_value">
-                        <field name="packaging_quantity_available" widget="float"/>
+                    <span class="o_stat_value d-flex gap-1">
+                        <field name="packaging_quantity_available" nolabel="1" class="oe_inline"/>
                     </span>
                     <span class="o_stat_text">Disponible</span>
                     <span class="o_stat_text">
