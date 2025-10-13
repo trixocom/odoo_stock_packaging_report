@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Stock Packaging Report',
-    'version': '18.0.11.3.0',
+    'version': '18.0.11.4.0',
     'category': 'Inventory/Inventory',
     'summary': 'Muestra cantidad de embalajes en el reporte de Existencias y en el smart button del producto',
     'description': """
@@ -45,18 +45,22 @@
         * No requiere duplicar información: usa el qty existente en product.packaging
         * Compatible con Odoo 18 Enterprise Edition
         
+        Changelog v11.4.0:
+        ------------------
+        * FIX CRÍTICO: Corregido nombre del botón en Odoo 18
+        * En Odoo 18 el botón se llama 'action_update_quantity_on_hand' (NO 'action_open_quants')
+        * Esto explica por qué las versiones anteriores no mostraban ningún cambio
+        * Ahora el xpath encuentra correctamente el botón y lo modifica
+        
         Changelog v11.3.0:
         ------------------
-        * FIX CRÍTICO: Reemplazar contenido del botón existente en lugar de crear uno nuevo
+        * FIX: Reemplazar contenido del botón existente en lugar de crear uno nuevo
         * El módulo ahora modifica directamente el smart button "Disponible" original
         * Eliminado intento de ocultar botón y crear uno nuevo (causaba que no se vieran cambios)
-        * Simplificado código de herencia de vistas
         
         Changelog v11.2.0:
         ------------------
         * FIX: Actualizado a sintaxis de Odoo 18 (sin attrs, solo invisible)
-        * FIX: Removido uso de attrs={'invisible': ...} reemplazado por invisible="..."
-        * IMPROVE: Código compatible con Odoo 18.0+ (post v17.0)
     """,
     'author': 'Trixocom',
     'website': 'https://github.com/trixocom/odoo_stock_packaging_report',
