@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Stock Packaging Report',
-    'version': '18.0.11.1.0',
+    'version': '18.0.11.2.0',
     'category': 'Inventory/Inventory',
     'summary': 'Muestra cantidad de embalajes en el reporte de Existencias y en el smart button del producto',
     'description': """
@@ -45,12 +45,11 @@
         * No requiere duplicar información: usa el qty existente en product.packaging
         * Compatible con Odoo 18 Enterprise Edition
         
-        Changelog v11.1.0:
+        Changelog v11.2.0:
         ------------------
-        * FIX: Corregido XPath para ocultar botón original y agregar nuevo
-        * FIX: Ahora usa herencia múltiple para evitar conflictos con vistas
-        * IMPROVE: Botón original ocultado con invisible="1"
-        * IMPROVE: Nuevo botón agregado al button_box correctamente
+        * FIX: Actualizado a sintaxis de Odoo 18 (sin attrs, solo invisible)
+        * FIX: Removido uso de attrs={'invisible': ...} reemplazado por invisible="..."
+        * IMPROVE: Código compatible con Odoo 18.0+ (post v17.0)
     """,
     'author': 'Trixocom',
     'website': 'https://github.com/trixocom/odoo_stock_packaging_report',
