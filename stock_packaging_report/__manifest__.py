@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Stock Packaging Report',
-    'version': '18.0.11.2.0',
+    'version': '18.0.11.3.0',
     'category': 'Inventory/Inventory',
     'summary': 'Muestra cantidad de embalajes en el reporte de Existencias y en el smart button del producto',
     'description': """
@@ -44,6 +44,13 @@
         * Cálculo automático basado en los packagings ya definidos en Odoo
         * No requiere duplicar información: usa el qty existente en product.packaging
         * Compatible con Odoo 18 Enterprise Edition
+        
+        Changelog v11.3.0:
+        ------------------
+        * FIX CRÍTICO: Reemplazar contenido del botón existente en lugar de crear uno nuevo
+        * El módulo ahora modifica directamente el smart button "Disponible" original
+        * Eliminado intento de ocultar botón y crear uno nuevo (causaba que no se vieran cambios)
+        * Simplificado código de herencia de vistas
         
         Changelog v11.2.0:
         ------------------
