@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Stock Packaging Report',
-    'version': '18.0.11.4.0',
+    'version': '18.0.11.5.0',
     'category': 'Inventory/Inventory',
-    'summary': 'Muestra cantidad de embalajes en el reporte de Existencias y en el smart button del producto',
+    'summary': 'Muestra cantidad de embalajes en el reporte de Existencias y en los smart buttons del producto',
     'description': """
         Stock Packaging Report
         ======================
@@ -13,8 +13,9 @@
         1. Columna "Embalajes Disponibles" en el reporte de Existencias 
            (Inventario > Reportes > Existencias)
         
-        2. Smart Button del producto modificado para mostrar embalajes
-           En lugar de "Disponible 5.030 U", muestra "Disponible 503 Cajas" 
+        2. Smart Buttons del producto modificados para mostrar embalajes:
+           - "Disponible": En lugar de "5.030 U", muestra "503 Cajas"
+           - "Pronosticado": En lugar de "4.890 U", muestra "489 Cajas"
            (o el nombre del embalaje configurado)
         
         Funcionamiento:
@@ -26,41 +27,37 @@
            (pestaña Inventario > sección Embalajes)
         
         3. El sistema calculará automáticamente:
-           Stock Disponible (unidades) / Unidades por Embalaje = Cantidad de Embalajes
+           - Disponible: qty_available / unidades_por_embalaje
+           - Pronosticado: virtual_available / unidades_por_embalaje
         
         Ejemplo:
         --------
         * Configuración: Nombre del embalaje = "Caja"
         * Producto "Azúcar" tiene packaging con name="Caja" y qty=10 (10 unidades por caja)
-        * Stock disponible = 5.030 unidades
-        * Smart button mostrará: "Disponible 503 Cajas" (5030 ÷ 10 = 503)
-        * Columna en reporte mostrará: 503.0
+        * Stock disponible = 5.030 unidades → Mostrará: "503 Cajas"
+        * Stock pronosticado = 4.890 unidades → Mostrará: "489 Cajas"
         
         Características:
         ----------------
-        * Smart button del producto modificado para mostrar embalajes en lugar de unidades
+        * Dos smart buttons modificados: "Disponible" y "Pronosticado"
         * Nueva columna "Embalajes Disponibles" en Inventario > Reportes > Existencias
+        * Botones ensanchados para evitar amontonamiento de texto
         * Configuración sencilla desde Ajustes de Inventario
         * Cálculo automático basado en los packagings ya definidos en Odoo
         * No requiere duplicar información: usa el qty existente en product.packaging
         * Compatible con Odoo 18 Enterprise Edition
         
+        Changelog v11.5.0:
+        ------------------
+        * FEATURE: Agregado botón "Pronosticado" con embalajes (packaging_virtual_available)
+        * IMPROVE: Botones ensanchados (min-width: 140px) para evitar amontonamiento de texto
+        * REFACTOR: Método auxiliar _calculate_packaging_qty para evitar duplicación de código
+        * Ambos botones ahora muestran cantidad de embalajes en lugar de unidades
+        
         Changelog v11.4.0:
         ------------------
         * FIX CRÍTICO: Corregido nombre del botón en Odoo 18
         * En Odoo 18 el botón se llama 'action_update_quantity_on_hand' (NO 'action_open_quants')
-        * Esto explica por qué las versiones anteriores no mostraban ningún cambio
-        * Ahora el xpath encuentra correctamente el botón y lo modifica
-        
-        Changelog v11.3.0:
-        ------------------
-        * FIX: Reemplazar contenido del botón existente en lugar de crear uno nuevo
-        * El módulo ahora modifica directamente el smart button "Disponible" original
-        * Eliminado intento de ocultar botón y crear uno nuevo (causaba que no se vieran cambios)
-        
-        Changelog v11.2.0:
-        ------------------
-        * FIX: Actualizado a sintaxis de Odoo 18 (sin attrs, solo invisible)
     """,
     'author': 'Trixocom',
     'website': 'https://github.com/trixocom/odoo_stock_packaging_report',
