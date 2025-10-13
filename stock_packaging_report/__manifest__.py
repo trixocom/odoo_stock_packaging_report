@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Stock Packaging Report',
-    'version': '18.0.11.5.2',
+    'version': '18.0.11.6.0',
     'category': 'Inventory/Inventory',
     'summary': 'Muestra cantidad de embalajes en el reporte de Existencias y en los smart buttons del producto',
     'description': """
@@ -29,6 +29,7 @@
         3. El sistema calculará automáticamente:
            - Disponible: qty_available / unidades_por_embalaje
            - Pronosticado: virtual_available / unidades_por_embalaje
+           - Embalajes en Reporte: available_quantity / unidades_por_embalaje
         
         Ejemplo:
         --------
@@ -36,16 +37,24 @@
         * Producto "Azúcar" tiene packaging con name="Caja" y qty=10 (10 unidades por caja)
         * Stock disponible = 5.030 unidades → Mostrará: "503 Cajas"
         * Stock pronosticado = 4.890 unidades → Mostrará: "489 Cajas"
+        * En reporte de inventario: 5.030 unidades → Columna muestra: "503"
         
         Características:
         ----------------
         * Dos smart buttons modificados: "Disponible" y "Pronosticado"
-        * Nueva columna "Embalajes Disponibles" en Inventario > Reportes > Existencias
+        * Nueva columna "Cantidad de Embalajes" en Inventario > Reportes > Existencias
         * Botones ensanchados (180px) con layout optimizado para claridad
         * Configuración sencilla desde Ajustes de Inventario
         * Cálculo automático basado en los packagings ya definidos en Odoo
         * No requiere duplicar información: usa el qty existente en product.packaging
         * Compatible con Odoo 18 Enterprise Edition
+        
+        Changelog v11.6.0:
+        ------------------
+        * FEATURE: Agregado modelo stock.quant con campo calculado packaging_quantity
+        * FEATURE: Columna "Cantidad de Embalajes" completamente funcional en reporte de Existencias
+        * Calcula automáticamente embalajes disponibles para cada línea del inventario
+        * Usa la misma lógica de cálculo que los smart buttons del producto
         
         Changelog v11.5.2:
         ------------------
@@ -73,6 +82,7 @@
         'views/res_config_settings_views.xml',
         'views/product_product_views.xml',
         'views/product_template_views.xml',
+        'views/stock_quant_views.xml',
     ],
     'installable': True,
     'application': False,
