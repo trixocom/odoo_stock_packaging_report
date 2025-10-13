@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Stock Packaging Report',
-    'version': '18.0.11.5.0',
+    'version': '18.0.11.5.1',
     'category': 'Inventory/Inventory',
     'summary': 'Muestra cantidad de embalajes en el reporte de Existencias y en los smart buttons del producto',
     'description': """
@@ -41,23 +41,24 @@
         ----------------
         * Dos smart buttons modificados: "Disponible" y "Pronosticado"
         * Nueva columna "Embalajes Disponibles" en Inventario > Reportes > Existencias
-        * Botones ensanchados para evitar amontonamiento de texto
+        * Botones ensanchados (180px) con layout optimizado para claridad
         * Configuración sencilla desde Ajustes de Inventario
         * Cálculo automático basado en los packagings ya definidos en Odoo
         * No requiere duplicar información: usa el qty existente en product.packaging
         * Compatible con Odoo 18 Enterprise Edition
         
+        Changelog v11.5.1:
+        ------------------
+        * FIX: Aumentado ancho de botones a 180px (era 140px, muy angosto)
+        * FIX: Corregida estructura de botones - número y embalaje en misma línea
+        * IMPROVE: Uso de d-flex gap-1 para espaciado correcto entre número y nombre
+        * Ahora se ve: "582,08 Bulto" en una línea y "Disponible" debajo
+        
         Changelog v11.5.0:
         ------------------
         * FEATURE: Agregado botón "Pronosticado" con embalajes (packaging_virtual_available)
-        * IMPROVE: Botones ensanchados (min-width: 140px) para evitar amontonamiento de texto
+        * IMPROVE: Botones ensanchados para evitar amontonamiento de texto
         * REFACTOR: Método auxiliar _calculate_packaging_qty para evitar duplicación de código
-        * Ambos botones ahora muestran cantidad de embalajes en lugar de unidades
-        
-        Changelog v11.4.0:
-        ------------------
-        * FIX CRÍTICO: Corregido nombre del botón en Odoo 18
-        * En Odoo 18 el botón se llama 'action_update_quantity_on_hand' (NO 'action_open_quants')
     """,
     'author': 'Trixocom',
     'website': 'https://github.com/trixocom/odoo_stock_packaging_report',
