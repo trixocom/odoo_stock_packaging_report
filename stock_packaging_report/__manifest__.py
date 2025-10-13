@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Stock Packaging Report',
-    'version': '18.0.11.6.0',
+    'version': '18.0.11.7.0',
     'category': 'Inventory/Inventory',
     'summary': 'Muestra cantidad de embalajes en el reporte de Existencias y en los smart buttons del producto',
     'description': """
@@ -10,7 +10,7 @@
         
         Este módulo añade funcionalidad para mostrar cantidades en embalajes en lugar de unidades:
         
-        1. Columna "Embalajes Disponibles" en el reporte de Existencias 
+        1. Columna "Bultos Disponibles" en el reporte de Existencias 
            (Inventario > Reportes > Existencias)
         
         2. Smart Buttons del producto modificados para mostrar embalajes:
@@ -29,7 +29,6 @@
         3. El sistema calculará automáticamente:
            - Disponible: qty_available / unidades_por_embalaje
            - Pronosticado: virtual_available / unidades_por_embalaje
-           - Embalajes en Reporte: available_quantity / unidades_por_embalaje
         
         Ejemplo:
         --------
@@ -42,12 +41,19 @@
         Características:
         ----------------
         * Dos smart buttons modificados: "Disponible" y "Pronosticado"
-        * Nueva columna "Cantidad de Embalajes" en Inventario > Reportes > Existencias
+        * Nueva columna "Bultos Disponibles" en Inventario > Reportes > Existencias
         * Botones ensanchados (180px) con layout optimizado para claridad
         * Configuración sencilla desde Ajustes de Inventario
         * Cálculo automático basado en los packagings ya definidos en Odoo
         * No requiere duplicar información: usa el qty existente en product.packaging
         * Compatible con Odoo 18 Enterprise Edition
+        
+        Changelog v11.7.0:
+        ------------------
+        * FIX CRÍTICO: Corregido modelo - el reporte usa product.product, NO stock.quant
+        * Eliminado modelo stock_quant.py innecesario
+        * La columna ahora aparece correctamente en Inventario > Reportes > Existencias
+        * Usa el campo packaging_quantity_available de product.product
         
         Changelog v11.6.0:
         ------------------
@@ -82,7 +88,6 @@
         'views/res_config_settings_views.xml',
         'views/product_product_views.xml',
         'views/product_template_views.xml',
-        'views/stock_quant_views.xml',
     ],
     'installable': True,
     'application': False,
