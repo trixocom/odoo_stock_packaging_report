@@ -9,33 +9,29 @@
             
             <!-- Modificar el botón "On Hand" (Disponible) -->
             <xpath expr="//button[@name='action_update_quantity_on_hand']" position="attributes">
-                <attribute name="style">min-width: 140px;</attribute>
+                <attribute name="style">min-width: 180px;</attribute>
             </xpath>
             <xpath expr="//button[@name='action_update_quantity_on_hand']/div[@class='o_field_widget o_stat_info']" position="replace">
                 <div class="o_field_widget o_stat_info">
-                    <span class="o_stat_value">
+                    <span class="o_stat_value d-flex gap-1">
                         <field name="packaging_quantity_available" nolabel="1" class="oe_inline"/>
+                        <field name="packaging_name_display" nolabel="1" class="oe_inline"/>
                     </span>
                     <span class="o_stat_text">Disponible</span>
-                    <span class="o_stat_text">
-                        <field name="packaging_name_display"/>
-                    </span>
                 </div>
             </xpath>
             
             <!-- Modificar el botón "Forecasted" (Pronosticado) -->
             <xpath expr="//button[@name='action_product_tmpl_forecast_report']" position="attributes">
-                <attribute name="style">min-width: 140px;</attribute>
+                <attribute name="style">min-width: 180px;</attribute>
             </xpath>
             <xpath expr="//button[@name='action_product_tmpl_forecast_report']/div[@class='o_field_widget o_stat_info']" position="replace">
                 <div class="o_field_widget o_stat_info">
-                    <span class="o_stat_value">
+                    <span class="o_stat_value d-flex gap-1">
                         <field name="packaging_virtual_available" nolabel="1" class="oe_inline"/>
+                        <field name="packaging_name_display" nolabel="1" class="oe_inline"/>
                     </span>
                     <span class="o_stat_text">Pronosticado</span>
-                    <span class="o_stat_text">
-                        <field name="packaging_name_display"/>
-                    </span>
                 </div>
             </xpath>
             
