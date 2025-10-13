@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Stock Packaging Report',
-    'version': '18.0.11.0.0',
+    'version': '18.0.11.1.0',
     'category': 'Inventory/Inventory',
     'summary': 'Muestra cantidad de embalajes en el reporte de Existencias y en el smart button del producto',
     'description': """
@@ -45,13 +45,12 @@
         * No requiere duplicar información: usa el qty existente en product.packaging
         * Compatible con Odoo 18 Enterprise Edition
         
-        Changelog v11.0.0:
+        Changelog v11.1.0:
         ------------------
-        * NEW: Smart button del producto ahora muestra cantidad de embalajes
-        * NEW: El smart button muestra el nombre del embalaje configurado (ej: "Cajas", "Bultos")
-        * FIX: Cálculo correcto en el smart button: unidades ÷ unidades_por_embalaje
-        * IMPROVE: Modelo product.template extendido con campos de embalajes
-        * IMPROVE: Vista del formulario del producto modificada para el nuevo smart button
+        * FIX: Corregido XPath para ocultar botón original y agregar nuevo
+        * FIX: Ahora usa herencia múltiple para evitar conflictos con vistas
+        * IMPROVE: Botón original ocultado con invisible="1"
+        * IMPROVE: Nuevo botón agregado al button_box correctamente
     """,
     'author': 'Trixocom',
     'website': 'https://github.com/trixocom/odoo_stock_packaging_report',
