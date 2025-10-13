@@ -6,10 +6,10 @@
         <field name="model">stock.quant</field>
         <field name="inherit_id" ref="stock.view_stock_quant_tree"/>
         <field name="arch" type="xml">
-            <!-- Añadir la columna de cantidad de embalajes después de available_quantity -->
-            <xpath expr="//field[@name='available_quantity']" position="after">
+            <!-- Agregar la columna al final del tree, antes del cierre -->
+            <xpath expr="//tree" position="inside">
                 <field name="packaging_quantity" 
-                       string="Cantidad de Embalajes" 
+                       string="Embalajes Disponibles" 
                        widget="float"
                        optional="show"/>
             </xpath>
@@ -22,10 +22,10 @@
         <field name="model">stock.quant</field>
         <field name="inherit_id" ref="stock.view_stock_quant_tree_inventory_editable"/>
         <field name="arch" type="xml">
-            <!-- Añadir la columna después de available_quantity -->
-            <xpath expr="//field[@name='available_quantity']" position="after">
+            <!-- Agregar la columna al final del tree -->
+            <xpath expr="//tree" position="inside">
                 <field name="packaging_quantity" 
-                       string="Cantidad de Embalajes" 
+                       string="Embalajes Disponibles" 
                        widget="float" 
                        readonly="1"
                        optional="show"/>
