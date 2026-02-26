@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Stock Packaging Report',
-    'version': '18.0.11.7.0',
+    'version': '18.0.11.7.1',
     'category': 'Inventory/Inventory',
     'summary': 'Muestra cantidad de embalajes en el reporte de Existencias y en los smart buttons del producto',
     'description': """
@@ -82,12 +82,13 @@
     'author': 'Trixocom',
     'website': 'https://github.com/trixocom/odoo_stock_packaging_report',
     'license': 'LGPL-3',
-    'depends': ['stock', 'product'],
+    'depends': ['sale_stock', 'stock', 'product'],
     'data': [
         'data/system_parameters.xml',
         'views/res_config_settings_views.xml',
         'views/product_product_views.xml',
         'views/product_template_views.xml',
+        'views/stock_quant_views.xml',
     ],
     'installable': True,
     'application': False,
